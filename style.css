@@ -1,0 +1,767 @@
+/* =========================================================
+   個人履歷網站 樣式表（側邊欄 + 內容區 兩欄式版型）
+   作者：邱家賢 11244154
+   說明：版面依自行繪製的線框圖規劃，未使用任何網路模板
+   ========================================================= */
+
+/* ---------- 1. 變數與全域設定 ---------- */
+:root {
+    --navy: #1b3a5c;
+    --navy-deep: #142c46;
+    --orange: #d98324;
+    --text: #313840;
+    --muted: #6f7a87;
+    --line: #e3e6eb;
+    --pink-bg: #fbf3f0;
+    --card: #ffffff;
+    --sidebar-width: 300px;
+    --shadow: 0 5px 18px rgba(27, 58, 92, 0.07);
+    --shadow-hover: 0 14px 32px rgba(27, 58, 92, 0.16);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* [特效] 點擊導覽連結時平滑捲動到該區塊 — 使用 scroll-behavior:smooth */
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+}
+
+body {
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    background-color: var(--pink-bg);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ---------- 2. 整體頁面骨架 ---------- */
+.page-body {
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+
+/* ---------- 3. 左側邊欄 ---------- */
+.sidebar {
+    flex: 0 0 var(--sidebar-width);
+    width: var(--sidebar-width);
+    padding: 34px 26px 40px;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #ffffff;
+}
+
+.sidebar-brand {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.sidebar-avatar {
+    margin: 22px 0 16px;
+    text-align: center;
+}
+
+.sidebar-avatar img {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.28);
+    /* [特效] 滑鼠移到頭像時輕微放大並轉為橘色外框 — 使用 transition + transform:scale */
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+/* [特效] 頭像 hover 放大、外框變橘色 */
+.sidebar-avatar img:hover {
+    transform: scale(1.06);
+    border-color: var(--orange);
+}
+
+.sidebar-name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-align: center;
+}
+
+/* [特效] 姓名下方橘色短線以 scaleX 動畫由中間展開 — 使用 animation + keyframes */
+.sidebar-name::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 10px auto 0;
+    background-color: var(--orange);
+    animation: line-grow 1s ease-out both;
+}
+
+@keyframes line-grow {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.sidebar-name span {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.sidebar-school {
+    margin-top: 14px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.sidebar-info {
+    font-size: 12px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 導覽列：垂直排列的編號清單 */
+.sidebar-nav {
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    font-size: 14.5px;
+    letter-spacing: 0.06em;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    /* [特效] 導覽項目 hover 時底色滑入並往右位移 — 使用 transition + transform:translateX */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+}
+
+/* [特效] 導覽項目 hover 時背景變亮、文字右移 */
+.sidebar-nav a:hover,
+.sidebar-nav a:focus {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    transform: translateX(6px);
+}
+
+.sidebar-extra {
+    margin-top: 30px;
+    padding-top: 20px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.68);
+    border-top: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+.sidebar-extra-title {
+    margin-top: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-extra-title:first-child {
+    margin-top: 0;
+}
+
+
+/* ---------- 4. 右側內容區 ---------- */
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 46px 52px 60px;
+    background-color: var(--pink-bg);
+}
+
+.section {
+    margin-bottom: 58px;
+}
+
+.section-head {
+    margin-bottom: 22px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+}
+
+.section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: var(--navy);
+    border-radius: 8px;
+    /* [特效] hover 區塊標題時編號方塊旋轉 45 度 — 使用 transition + transform */
+    transition: transform 0.4s ease, background-color 0.4s ease;
+}
+
+.section-title:hover .section-num {
+    background-color: var(--orange);
+    transform: rotate(45deg);
+}
+
+.section-desc {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+
+/* ---------- 5. 個人介紹橫幅 ---------- */
+.section-hero {
+    margin-bottom: 50px;
+}
+
+.hero {
+    padding: 40px 40px 34px;
+    background-color: var(--card);
+    border-radius: 16px;
+    border-left: 6px solid var(--navy);
+    box-shadow: var(--shadow);
+}
+
+.hero-eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--orange);
+}
+
+.hero-title {
+    margin-top: 6px;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+}
+
+.hero-slogan {
+    margin: 14px 0 16px;
+    padding-left: 14px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--navy);
+    border-left: 3px solid var(--orange);
+}
+
+.hero-intro {
+    font-size: 15px;
+    text-align: justify;
+    color: #45505c;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btn-main {
+    display: inline-block;
+    padding: 10px 24px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    background-color: var(--navy);
+    border-radius: 999px;
+    /* [特效] 按鈕 hover 上浮並放大 — 使用 transition + transform:translateY/scale */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-main:hover {
+    background-color: var(--orange);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(217, 131, 36, 0.32);
+}
+
+.chip {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--navy);
+    background-color: #f1f4f8;
+    border: 1px solid #dde4ec;
+    border-radius: 999px;
+    transition: background-color 0.28s ease, color 0.28s ease, transform 0.28s ease;
+}
+
+/* [特效] hashtag 標籤 hover 反白並上移 */
+.chip:hover {
+    color: #ffffff;
+    background-color: var(--navy);
+    transform: translateY(-3px);
+}
+
+.hero-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--line);
+}
+
+.hero-facts li {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.hero-facts strong {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+}
+
+
+/* ---------- 6. 技能區 ---------- */
+.skill-panel {
+    padding: 28px 30px 12px;
+    background-color: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.panel-title {
+    margin-bottom: 18px;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+}
+
+.panel-title-out {
+    margin: 30px 0 16px;
+}
+
+.skill-row {
+    margin-bottom: 18px;
+}
+
+.skill-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+    font-size: 13.5px;
+}
+
+.skill-percent {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--orange);
+}
+
+.bar-track {
+    height: 9px;
+    background-color: #eceff3;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    width: var(--level);
+    height: 100%;
+    background: linear-gradient(90deg, #e0a259 0%, var(--orange) 100%);
+    border-radius: 999px;
+    /* [特效] 技能進度條載入時從左往右長出 — 使用 animation + keyframes */
+    animation: grow-bar 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes grow-bar {
+    from {
+        transform: scaleX(0);
+        transform-origin: left center;
+    }
+
+    to {
+        transform: scaleX(1);
+        transform-origin: left center;
+    }
+}
+
+/* 其他技能圓形圖示 */
+.circle-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.circle-item {
+    padding: 22px 12px;
+    text-align: center;
+    background-color: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.32s ease, box-shadow 0.32s ease;
+}
+
+.circle-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.circle {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* 以 conic-gradient 畫出 3/4 圓環，不使用任何圖片 */
+    background: conic-gradient(var(--ring-color) 0 75%, #eceff3 75% 100%);
+    /* [特效] 滑鼠移到圓形圖示時旋轉並放大 — 使用 transition + transform:rotate/scale */
+    transition: transform 0.45s ease;
+}
+
+.circle::after {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    background-color: var(--card);
+    border-radius: 50%;
+}
+
+.circle span {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ring-color);
+}
+
+/* [特效] 圓形圖示 hover 旋轉 180 度並放大 */
+.circle:hover {
+    transform: rotate(180deg) scale(1.08);
+}
+
+.circle:hover span {
+    /* 反向旋轉讓文字保持正向 */
+    transform: rotate(-180deg);
+    transition: transform 0.45s ease;
+}
+
+.circle-item p {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+
+/* ---------- 7. 經歷區 ---------- */
+.exp-item {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 22px;
+    padding: 24px;
+    background-color: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--navy);
+    /* [特效] 經歷卡片 hover 上浮 — 使用 transition + transform:translateY */
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.exp-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.exp-figure {
+    flex: 0 0 280px;
+}
+
+.exp-figure img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background-color: #f3f5f8;
+    cursor: zoom-in;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* [特效] 佐證圖片 hover 放大並提高對比，提示可點擊 */
+.exp-figure img:hover {
+    transform: scale(1.03);
+    filter: contrast(1.05);
+}
+
+.exp-figure figcaption {
+    margin-top: 8px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.exp-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.exp-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.exp-head h3 {
+    font-size: 17px;
+    color: var(--navy);
+}
+
+.exp-time {
+    padding: 3px 12px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--orange);
+    background-color: #fdf1e5;
+    border-radius: 999px;
+}
+
+.exp-role {
+    margin: 4px 0 10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.exp-text {
+    font-size: 14.5px;
+    line-height: 1.9;
+    text-align: justify;
+}
+
+.exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.exp-tags li {
+    padding: 3px 11px;
+    font-size: 12px;
+    color: var(--navy);
+    background-color: #eff3f8;
+    border-radius: 6px;
+}
+
+
+/* ---------- 8. 聯絡資訊區 ---------- */
+.contact-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px 30px;
+    padding: 26px 30px;
+    background-color: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.contact-item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+}
+
+.contact-key {
+    flex: 0 0 86px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+}
+
+.contact-value {
+    font-size: 13.5px;
+    word-break: break-all;
+    color: #45505c;
+    /* [特效] Email / 社群連結 hover 出現底線動畫 — 使用 background-size + transition */
+    background-image: linear-gradient(var(--orange), var(--orange));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 2px;
+    transition: background-size 0.35s ease, color 0.35s ease;
+}
+
+/* [特效] 連結 hover 時底線由左至右展開 */
+.contact-value:hover {
+    color: var(--orange);
+    background-size: 100% 2px;
+}
+
+.btn-mail {
+    margin-top: 22px;
+}
+
+
+/* ---------- 9. 頁尾 Footer ---------- */
+.site-footer {
+    padding: 26px 30px 30px;
+    text-align: center;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.82);
+    background-color: var(--navy-deep);
+}
+
+.footer-brand {
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--orange);
+}
+
+.footer-note {
+    margin-top: 4px;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ---------- 10. 響應式設計（平板 / 手機） ---------- */
+@media screen and (max-width: 1024px) {
+    :root {
+        --sidebar-width: 250px;
+    }
+
+    .content {
+        padding: 34px 30px 46px;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .circle-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 760px) {
+    /* 螢幕變窄時改為上下排列：側邊欄在上、內容在下 */
+    .page-body {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 28px 22px 24px;
+        text-align: center;
+    }
+
+    .sidebar-avatar img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .sidebar-nav {
+        margin-top: 22px;
+        padding-top: 18px;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .sidebar-nav a {
+        padding: 8px 14px;
+        font-size: 13px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-extra {
+        display: none;
+    }
+
+    .content {
+        padding: 26px 18px 40px;
+    }
+
+    .hero {
+        padding: 26px 22px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .hero-facts,
+    .contact-box,
+    .circle-list {
+        grid-template-columns: 1fr;
+    }
+
+    .exp-item {
+        display: block;
+    }
+
+    .exp-figure {
+        margin-bottom: 16px;
+    }
+
+    .exp-figure img {
+        height: auto;
+        max-height: 240px;
+    }
+}
